@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS dashboard.BankAccountTransfer;
+DROP TABLE IF EXISTS dashboard.BankAccountWithdrawal;
+DROP TABLE IF EXISTS dashboard.BankAccountDeposit;
+DROP TABLE IF EXISTS dashboard.BankSubAccount;
+DROP TABLE IF EXISTS dashboard.BankAccount;
+DROP TABLE IF EXISTS dashboard.BankAccountType;
+DROP TABLE IF EXISTS dashboard.Bank;
+DROP TABLE IF EXISTS dashboard.Bill;
+DROP TABLE IF EXISTS dashboard.Subscription;
+DROP TABLE IF EXISTS dashboard.PaymentOccurence;
+DROP TABLE IF EXISTS dashboard.EmbyServer;
+DROP TABLE IF EXISTS dashboard.SurveillanceCamera;
+DROP TABLE IF EXISTS dashboard.ExternalApp;
+DROP TABLE IF EXISTS dashboard.User;
