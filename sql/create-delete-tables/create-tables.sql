@@ -9,7 +9,6 @@ CREATE TABLE dashboard.User (
 CREATE TABLE dashboard.ExternalApp (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	user_id INT UNSIGNED NOT NULL,
-	icon VARCHAR(255),
 	name VARCHAR(255) NOT NULL,
 	link VARCHAR(255) NOT NULL,
 
@@ -59,6 +58,7 @@ CREATE TABLE dashboard.Subscription (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	user_id INT UNSIGNED NOT NULL,
 	occurence_id INT UNSIGNED NOT NULL,
+	occurs_every INT UNSIGNED,
 	company VARCHAR(155) NOT NULL,
 	amount DECIMAL(10,2) NOT NULL,
 	website VARCHAR(155) NOT NULL,
