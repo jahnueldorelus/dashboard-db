@@ -1,12 +1,13 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `update_surveillance_camera`$$
+DROP PROCEDURE IF EXISTS `update_user_surveillance_camera`$$
 
-CREATE PROCEDURE `update_surveillance_camera` (IN user_id INT UNSIGNED, surveillance_camera_id INT UNSIGNED, 
-												name VARCHAR(255), link VARCHAR(255))
+CREATE PROCEDURE `update_user_surveillance_camera` (IN param_userId INT UNSIGNED, param_surveillanceCameraId INT UNSIGNED, 
+												param_name VARCHAR(255), param_link VARCHAR(255))
 BEGIN
-	UPDATE SurveillanceCamera SET name = name, link = link
-								WHERE user_id = user_id AND id = surveillance_camera_id;
-END$$
+	UPDATE SurveillanceCamera SET name = param_name, link = param_link
+								WHERE user_id = param_userId AND id = param_surveillanceCameraId;
 
+	CALL get_surveillance_camera(param_surveillanceCameraId);
+END$$
 DELIMITER ;

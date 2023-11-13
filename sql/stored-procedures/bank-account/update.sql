@@ -1,24 +1,28 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `update_bank_account`$$
+DROP PROCEDURE IF EXISTS `update_user_bank_account`$$
 
-CREATE PROCEDURE `update_bank_account` (IN user_id INT UNSIGNED, bank_account_id INT UNSIGNED, 
-										type_id INT UNSIGNED, amount INT UNSIGNED,
-										active BOOLEAN)
+CREATE PROCEDURE `update_user_bank_account` (IN param_userId INT UNSIGNED, param_bankAccountId INT UNSIGNED, 
+										param_accountType VARCHAR(50), param_amount DECIMAL(10,2),
+										param_active BOOLEAN)
 BEGIN
-	DECLARE bankId INT UNSIGNED;
-	DECLARE bankUserId INT UNSIGNED;
+	SET @bankId = (SELECT bank_id FROM BankAccount WHERE id = param_bankAccountId);
+	SET @bankUserId = (SELECT user_id FROM Bank WHERE id = @bankId);
+	SET @typeId = (SELECT id from BankAccountType where type = param_accountType);
 
-	SET bankId = (SELECT bank_id FROM BankAccount WHERE id = bank_account_id);
-	SET bankUserId = (SELECT user_id FROM Bank WHERE id = bank_id);
+	-- If the account type given doesn't exist
+	IF ISNULL(@typeId) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "The account type given doesn't exist";
+	END IF;
 
 	-- If the bank account doesn't belong to the user
-	IF bankUserId != user_id THEN
+	IF @bankUserId != param_userId THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot update a bank account the user doesn't have";
 	END IF;
 
-	UPDATE BankAccount SET type_id = type_id, amount = amount, active = active
-						WHERE id = bank_account_id;
-END$$
+	UPDATE BankAccount SET type_id = @typeId, amount = param_amount, active = param_active
+						WHERE id = param_bankAccountId;
 
+	CALL get_bank_account(param_bankAccountId);
+END$$
 DELIMITER ;

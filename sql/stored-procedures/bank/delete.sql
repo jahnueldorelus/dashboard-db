@@ -1,10 +1,9 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `delete_bank`$$
+DROP PROCEDURE IF EXISTS `delete_user_bank`$$
 
-CREATE PROCEDURE `delete_bank` (IN bank_user_id INT UNSIGNED, bank_id INT UNSIGNED)
+CREATE PROCEDURE `delete_user_bank` (IN param_userId INT UNSIGNED, param_bankId INT UNSIGNED)
 BEGIN
-	DELETE FROM Bank WHERE id = bank_id AND user_id = bank_user_id;
+	DELETE FROM Bank WHERE id = param_bankId AND user_id = param_userId;
 END$$
-
 DELIMITER ;

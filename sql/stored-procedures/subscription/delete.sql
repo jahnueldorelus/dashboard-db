@@ -1,10 +1,9 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `delete_subscription`$$
+DROP PROCEDURE IF EXISTS `delete_user_subscription`$$
 
-CREATE PROCEDURE `delete_subscription` (IN subscription_user_id INT UNSIGNED, subscription_id INT UNSIGNED)
+CREATE PROCEDURE `delete_user_subscription` (IN param_userId INT UNSIGNED, param_subscriptionId INT UNSIGNED)
 BEGIN
-	DELETE FROM Subscription WHERE id = subscription_id AND user_id = subscription_user_id;
+	DELETE FROM Subscription WHERE id = param_subscriptionId AND user_id = param_userId;
 END$$
-
 DELIMITER ;

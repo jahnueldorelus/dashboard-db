@@ -1,10 +1,9 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `delete_external_app`$$
+DROP PROCEDURE IF EXISTS `delete_user_external_app`$$
 
-CREATE PROCEDURE `delete_external_app` (IN external_app_user_id INT UNSIGNED, external_app_id INT UNSIGNED)
+CREATE PROCEDURE `delete_user_external_app` (IN param_userId INT UNSIGNED, param_externalAppId INT UNSIGNED)
 BEGIN
-	DELETE FROM ExternalApp WHERE id = external_app_id AND user_id = external_app_user_id;
+	DELETE FROM ExternalApp WHERE id = param_externalAppId AND user_id = param_userId;
 END$$
-
 DELIMITER ;

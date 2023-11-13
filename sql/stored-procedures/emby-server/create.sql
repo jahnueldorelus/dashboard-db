@@ -1,12 +1,13 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `create_emby_server`$$
+DROP PROCEDURE IF EXISTS `create_user_emby_server`$$
 
-CREATE PROCEDURE `create_emby_server` (IN user_id INT UNSIGNED, host VARCHAR(255), 
-										host_name VARCHAR(255), api_key VARCHAR(255))
+CREATE PROCEDURE `create_user_emby_server` (IN param_userId INT UNSIGNED, param_host VARCHAR(255), 
+										param_hostName VARCHAR(255), param_apiKey VARCHAR(255))
 BEGIN
 	INSERT INTO EmbyServer (user_id, host, host_name, api_key) 
-		VALUES (user_id, host, host_name, api_key);
-END$$
+		VALUES (param_userId, param_host, param_hostName, param_apiKey);
 
+	CALL get_emby_server(LAST_INSERT_ID());
+END$$
 DELIMITER ;

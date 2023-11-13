@@ -1,10 +1,9 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `delete_emby_server`$$
+DROP PROCEDURE IF EXISTS `delete_user_emby_server`$$
 
-CREATE PROCEDURE `delete_emby_server` (IN emby_server_user_id INT UNSIGNED, emby_server_id INT UNSIGNED)
+CREATE PROCEDURE `delete_user_emby_server` (IN param_userId INT UNSIGNED, param_embyServerId INT UNSIGNED)
 BEGIN
-	DELETE FROM EmbyServer WHERE id = emby_server_id AND user_id = emby_server_user_id;
+	DELETE FROM EmbyServer WHERE id = param_embyServerId AND user_id = param_userId;
 END$$
-
 DELIMITER ;

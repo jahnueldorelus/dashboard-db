@@ -1,10 +1,9 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `delete_user`$$
+DROP PROCEDURE IF EXISTS `delete_user`$$
 
-CREATE PROCEDURE `delete_user` (IN user_id INT UNSIGNED)
+CREATE PROCEDURE `delete_user` (IN param_userId INT UNSIGNED)
 BEGIN
-	DELETE FROM User WHERE id = user_id;
+	DELETE FROM User WHERE id = param_userId;
 END$$
-
 DELIMITER ;

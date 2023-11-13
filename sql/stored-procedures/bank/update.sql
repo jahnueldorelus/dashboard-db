@@ -1,15 +1,16 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `update_bank`$$
+DROP PROCEDURE IF EXISTS `update_user_bank`$$
 
-CREATE PROCEDURE `update_bank` (IN user_id INT UNSIGNED, bank_id INT UNSIGNED, 
-								name VARCHAR(100), address_one VARCHAR(200), 
-								address_two VARCHAR(200), city VARCHAR(85), 
-								state VARCHAR(30), zipcode VARCHAR(10))
+CREATE PROCEDURE `update_user_bank` (IN param_userId INT UNSIGNED, param_bankId INT UNSIGNED, 
+								param_name VARCHAR(100), param_addressOne VARCHAR(200), 
+								param_addressTwo VARCHAR(200), param_city VARCHAR(85), 
+								param_state VARCHAR(30), param_zipcode VARCHAR(10))
 BEGIN
-	UPDATE Bank SET name = name, address_one = address_one, address_two = address_two,
-					city = city, state = state, zipcode = zipcode
-				WHERE user_id = user_id AND id = bank_id;
-END$$
+	UPDATE Bank SET name = param_name, address_one = param_addressOne, address_two = param_addressTwo,
+					city = param_city, state = param_state, zipcode = param_zipcode
+				WHERE user_id = param_userId AND id = param_bankId;
 
+	CALL get_bank(param_bankId);
+END$$
 DELIMITER ;

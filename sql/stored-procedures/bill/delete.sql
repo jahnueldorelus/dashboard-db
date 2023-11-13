@@ -1,10 +1,9 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `delete_bill`$$
+DROP PROCEDURE IF EXISTS `delete_user_bill`$$
 
-CREATE PROCEDURE `delete_bill` (IN bill_user_id INT UNSIGNED, bill_id INT UNSIGNED)
+CREATE PROCEDURE `delete_user_bill` (IN param_userId INT UNSIGNED, param_billId INT UNSIGNED)
 BEGIN
-	DELETE FROM Bill WHERE id = bill_id AND user_id = bill_user_id;
+	DELETE FROM Bill WHERE id = param_billId AND user_id = param_userId;
 END$$
-
 DELIMITER ;

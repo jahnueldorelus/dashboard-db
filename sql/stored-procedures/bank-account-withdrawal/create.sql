@@ -1,32 +1,29 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `create_bank_account_withdrawal`$$
+DROP PROCEDURE IF EXISTS `create_user_bank_account_withdrawal`$$
 
-CREATE PROCEDURE `create_bank_account_withdrawal` (IN user_id INT UNSIGNED, bank_account_id INT UNSIGNED, 
-													amount DECIMAL(10,2), description VARCHAR(100),
-													withdrawal_date DATE)
+CREATE PROCEDURE `create_user_bank_account_withdrawal` (IN param_userId INT UNSIGNED, param_bankAccountId INT UNSIGNED, 
+													param_amount DECIMAL(10,2), param_description VARCHAR(100),
+													param_date DATE)
 BEGIN
-	DECLARE bankAccountBankId INT UNSIGNED;
-	DECLARE bankUserId INT UNSIGNED;
-	DECLARE errorMessage VARCHAR(100);
-
-	SET errorMessage = "Cannot create a bank account withdrawal for an account the user doesn't own";
-	SET bankAccountBankId = (SELECT bank_id FROM BankAccount WHERE id = bank_account_id);
+	SET @errorMessage = "Cannot create a bank account withdrawal for an account the user doesn't own";
+	SET @bankId = (SELECT bank_id FROM BankAccount WHERE id = param_bankAccountId);
 
 	-- If the bank account doesn't exist
-	IF bankAccountBankId = NULL THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = errorMessage;
+	IF ISNULL(@bankId) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
 	END IF;
 
-	SET bankUserId = (SELECT user_id FROM Bank WHERE id = bankAccountBankId);
+	SET @bankUserId = (SELECT user_id FROM Bank WHERE id = @bankId);
 
 	-- If the bank doesn't belong to the user
-	IF bankUserId != user_id THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = errorMessage;
+	IF @bankUserId != param_userId THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
 	END IF;
 
 	INSERT INTO BankAccountWithdrawal (bank_account_id, amount, description, dt) 
-		VALUES (bank_account_id, amount, description, withdrawal_date);
-END$$
+		VALUES (param_bankAccountId, param_amount, param_description, param_date);
 
+	CALL get_bank_account_withdrawal(LAST_INSERT_ID());
+END$$
 DELIMITER ;

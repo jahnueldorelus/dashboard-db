@@ -1,11 +1,10 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `get_user_banks`$$
+DROP PROCEDURE IF EXISTS `get_bank`$$
 
-CREATE PROCEDURE `get_user_banks` (IN user_id INT UNSIGNED)
+CREATE PROCEDURE `get_bank` (IN param_bankId INT UNSIGNED)
 BEGIN
 	SELECT id, name, address_one AS addressOne, address_two AS addressTwo, city, state, zipcode FROM Bank
-		WHERE user_id = user_id;
+		WHERE id = param_bankId;
 END$$
-
 DELIMITER ;

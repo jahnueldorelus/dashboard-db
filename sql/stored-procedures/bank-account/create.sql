@@ -1,22 +1,21 @@
 DELIMITER $$
 USE `dashboard`$$
-DROP procedure IF EXISTS `create_bank_account`$$
+DROP PROCEDURE IF EXISTS `create_user_bank_account`$$
 
-CREATE PROCEDURE `create_bank_account` (IN user_id INT UNSIGNED, bank_id INT UNSIGNED, 
-										type_id INT UNSIGNED, amount INT UNSIGNED,
-										active BOOLEAN)
+CREATE PROCEDURE `create_user_bank_account` (IN param_userId INT UNSIGNED, param_bankId INT UNSIGNED, 
+										param_typeId INT UNSIGNED, param_amount DECIMAL(10,2),
+										param_active BOOLEAN)
 BEGIN
-	DECLARE bankUserId INT UNSIGNED;
-
-	SET bankUserId = (SELECT user_id FROM Bank WHERE id = bank_id);
+	SET @bankUserId = (SELECT user_id FROM Bank WHERE id = param_bankId);
 
 	-- If the bank doesn't belong to the user
-	IF bankUserId != user_id THEN
+	IF @bankUserId != param_userId THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot create a bank account in a bank the user doesn't have";
 	END IF;
 
 	INSERT INTO BankAccount (bank_id, type_id, amount, active) 
-		VALUES (bank_id, type_id, amount, active);
-END$$
+		VALUES (param_bankId, param_typeId, param_amount, param_active);
 
+	CALL get_bank_account(LAST_INSERT_ID());
+END$$
 DELIMITER ;
