@@ -4,10 +4,10 @@ DROP PROCEDURE IF EXISTS `delete_user_bank_account_withdrawal`$$
 
 CREATE PROCEDURE `delete_user_bank_account_withdrawal` (IN param_userId INT UNSIGNED, param_withdrawalId INT UNSIGNED)
 BEGIN
-	SET @errorMessage = "Cannot delete a bank account withdrawal for an account the user doesn't own";
+	SET @errorMessage = "Cannot delete a bank account withdrawal for a bank account the user doesn't have";
 	SET @bankAccountId = (SELECT bank_account_id FROM BankAccountWithdrawal WHERE id = param_withdrawalId);
 
-	-- If the bank account deposit doesn't exist
+	-- If the bank account withdrawal doesn't exist
 	IF ISNULL(@bankAccountId) THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
 	END IF;

@@ -4,9 +4,7 @@ DROP PROCEDURE IF EXISTS `delete_user_bank_account_deposit`$$
 
 CREATE PROCEDURE `delete_user_bank_account_deposit` (IN param_userId INT UNSIGNED, param_depositId INT UNSIGNED)
 BEGIN
-	DECLARE bankUserId INT UNSIGNED;
-
-	SET @errorMessage = "Cannot delete a bank account deposit for an account the user doesn't own";
+	SET @errorMessage = "Cannot delete a bank account deposit for a bank account the user doesn't have";
 	SET @bankAccountId = (SELECT bank_account_id FROM BankAccountDeposit WHERE id = param_depositId);
 
 	-- If the bank account deposit doesn't exist

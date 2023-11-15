@@ -6,7 +6,7 @@ CREATE PROCEDURE `create_user_bank_account_withdrawal` (IN param_userId INT UNSI
 													param_amount DECIMAL(10,2), param_description VARCHAR(100),
 													param_date DATE)
 BEGIN
-	SET @errorMessage = "Cannot create a bank account withdrawal for an account the user doesn't own";
+	SET @errorMessage = "Cannot create a bank account withdrawal for an account the user doesn't have";
 	SET @bankId = (SELECT bank_id FROM BankAccount WHERE id = param_bankAccountId);
 
 	-- If the bank account doesn't exist

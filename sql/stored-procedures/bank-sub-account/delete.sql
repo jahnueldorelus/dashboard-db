@@ -4,7 +4,7 @@ DROP PROCEDURE IF EXISTS `delete_user_bank_sub_account`$$
 
 CREATE PROCEDURE `delete_user_bank_sub_account` (IN param_userId INT UNSIGNED, param_subAccountId INT UNSIGNED)
 BEGIN
-	SET @errorMessage = "Cannot delete a bank sub account the user doesn't own";
+	SET @errorMessage = "Cannot delete a bank sub account the user doesn't have";
 	SET @bankAccountId = (SELECT bank_account_id FROM BankSubAccount WHERE id = param_subAccountId);
 
 	-- If the bank sub account doesn't exist

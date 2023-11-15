@@ -16,7 +16,7 @@ CREATE trigger `update_bank_sub_account` BEFORE UPDATE ON BankSubAccount
 			SET moneyLeftForSubAccount = amountInBankAccount - amountInBankSubAccounts;
 
 			IF NEW.amount > moneyLeftForSubAccount THEN
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Can't update sub bank account with more money than what the main account (minus other sub accounts) has";
+				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Can't update the bank sub account with more money than what can be allocated to it";
 			END IF;
 		END$$
 DELIMITER ;

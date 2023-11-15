@@ -7,8 +7,8 @@ BEGIN
 	SELECT BankAccount.id, BankAccount.bank_id AS bankId, BankAccountType.type, 
 		BankAccount.active, BankAccount.amount 
 		FROM Bank
-			LEFT JOIN BankAccount ON Bank.id = BankAccount.bank_id
-			LEFT JOIN BankAccountType ON BankAccountType.id = BankAccount.type_id
+			INNER JOIN BankAccount ON Bank.id = BankAccount.bank_id
+			INNER JOIN BankAccountType ON BankAccountType.id = BankAccount.type_id
 		WHERE Bank.user_id = param_userId
 		ORDER BY bankId, BankAccountType.type, BankAccount.active;
 END$$

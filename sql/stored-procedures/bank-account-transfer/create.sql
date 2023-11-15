@@ -18,7 +18,7 @@ BEGIN
 	SET @fromBankUserId = (SELECT bank_id FROM BankAccount WHERE id = param_fromBankAccountId);
 	SET @toBankUserId = (SELECT bank_id FROM BankAccount WHERE id = param_toBankAccountId);
 
-	SET @errorMessage = "Cannot create a bank account transfer between accounts the user doesn't own";
+	SET @errorMessage = "Cannot create a bank account transfer between accounts the user doesn't have";
 
 	-- If the bank accounts do not belong to the same user OR the user given
 	IF @fromBankUserId != @toBankUserId OR @fromBankUserId != param_userId THEN

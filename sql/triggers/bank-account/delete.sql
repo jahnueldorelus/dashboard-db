@@ -14,7 +14,7 @@ CREATE trigger `delete_bank_account` BEFORE DELETE ON BankAccount
 			);
 
 			IF numOfTransfers > 0 THEN
-				UPDATE BankAccount SET active = FALSE WHERE id = OLD.id;
+				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "The bank account cannot be deleted due to transfers it has with another account";
 			END IF;
 		END$$
 DELIMITER ;

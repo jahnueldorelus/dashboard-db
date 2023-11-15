@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS `create_user_bank_sub_account`$$
 CREATE PROCEDURE `create_user_bank_sub_account` (IN param_userId INT UNSIGNED, param_bankAccountId INT UNSIGNED, 
 											param_name VARCHAR(100), param_amount DECIMAL(10,2))
 BEGIN
-	SET @errorMessage = "Cannot create a bank sub account for an account the user doesn't own";
+	SET @errorMessage = "Cannot create a bank sub account for an account the user doesn't have";
 	SET @bankId = (SELECT bank_id FROM BankAccount WHERE id = param_bankAccountId);
 
 	-- If the bank account doesn't exist

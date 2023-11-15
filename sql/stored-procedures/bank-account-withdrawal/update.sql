@@ -9,7 +9,7 @@ BEGIN
 	SET @errorMessage = "Cannot update a bank account withdrawal for an account the user doesn't have";
 	SET @bankAccountId = (SELECT bank_account_id FROM BankAccountWithdrawal WHERE id = param_withdrawalId);
 
-	-- If the bank account doesn't exist
+	-- If the bank account withdrawal doesn't exist
 	IF ISNULL(@bankAccountId) THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
 	END IF;
@@ -17,7 +17,7 @@ BEGIN
 	SET @bankId = (SELECT bank_id FROM BankAccount WHERE id = @bankAccountId);
 	SET @bankUserId = (SELECT user_id FROM Bank WHERE id = @bankId);
 
-	-- If the bank account doesn't belong to the user
+	-- If the bank doesn't belong to the user
 	IF @bankUserId != param_userId THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
 	END IF;

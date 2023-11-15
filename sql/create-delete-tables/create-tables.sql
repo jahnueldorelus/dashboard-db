@@ -58,7 +58,7 @@ CREATE TABLE dashboard.Subscription (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	user_id INT UNSIGNED NOT NULL,
 	occurence_id INT UNSIGNED NOT NULL,
-	occurs_every INT UNSIGNED,
+	occurs_every INT UNSIGNED NOT NULL,
 	company VARCHAR(155) NOT NULL,
 	amount DECIMAL(10,2) NOT NULL,
 	website VARCHAR(155) NOT NULL,
