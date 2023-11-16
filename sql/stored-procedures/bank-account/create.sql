@@ -3,8 +3,8 @@ USE `dashboard`$$
 DROP PROCEDURE IF EXISTS `create_user_bank_account`$$
 
 CREATE PROCEDURE `create_user_bank_account` (IN param_userId INT UNSIGNED, param_bankId INT UNSIGNED, 
-										param_typeId INT UNSIGNED, param_amount DECIMAL(10,2),
-										param_active BOOLEAN)
+											param_typeId INT UNSIGNED, param_amount DECIMAL(10,2),
+											param_active BOOLEAN)
 BEGIN
 	SET @bankUserId = (SELECT user_id FROM Bank WHERE id = param_bankId);
 

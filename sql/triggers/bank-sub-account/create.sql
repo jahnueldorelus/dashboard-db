@@ -16,7 +16,7 @@ CREATE trigger `create_bank_sub_account` BEFORE INSERT ON BankSubAccount
 			SET moneyLeftForNewSubAccount = amountInBankAccount - amountInBankSubAccounts;
 
 			IF NEW.amount > moneyLeftForNewSubAccount THEN
-				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Can't create a new sub bank account with more money than what the main account (minus previous sub accounts) has";
+				SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Can't create a bank sub account with more money than what can be allocated to it";
 			END IF;
 		END$$
 DELIMITER ;
