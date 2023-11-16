@@ -3,7 +3,7 @@ CREATE TABLE dashboard.User (
 	mongo_id VARCHAR(24) NOT NULL,
 
 	PRIMARY KEY (id),
-	UNIQUE (mongo_id)
+	CONSTRAINT UC_User UNIQUE (mongo_id)
 );
 
 CREATE TABLE dashboard.ExternalApp (
@@ -14,8 +14,7 @@ CREATE TABLE dashboard.ExternalApp (
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
-	UNIQUE (user_id, name),
-	UNIQUE (user_id, link)
+	CONSTRAINT UC_External_App UNIQUE (user_id, name, link)
 );
 
 CREATE TABLE dashboard.SurveillanceCamera (
@@ -26,8 +25,7 @@ CREATE TABLE dashboard.SurveillanceCamera (
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
-	UNIQUE (user_id, name),
-	UNIQUE (user_id, link)
+	CONSTRAINT UC_Surveillance_Camera UNIQUE (user_id, name, link)
 );
 
 CREATE TABLE dashboard.EmbyServer (
@@ -39,8 +37,7 @@ CREATE TABLE dashboard.EmbyServer (
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
-	UNIQUE (user_id, host),
-	UNIQUE (user_id, host_name)
+	CONSTRAINT UC_Emby_Server UNIQUE (user_id, host, host_name)
 );
 
 CREATE TABLE dashboard.PaymentOccurence (
@@ -66,7 +63,8 @@ CREATE TABLE dashboard.Subscription (
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (occurence_id) REFERENCES PaymentOccurence(id),
-	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+	CONSTRAINT UC_Subscription UNIQUE (user_id, company)
 );
 
 CREATE TABLE dashboard.Bill (
@@ -80,9 +78,10 @@ CREATE TABLE dashboard.Bill (
 	website VARCHAR(155) NOT NULL,
 	due_date DATE NOT NULL,
 
-	CONSTRAINT PK_id PRIMARY KEY (id),
-	CONSTRAINT FK_occurence_id FOREIGN KEY (occurence_id) REFERENCES PaymentOccurence(id),
-	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+	PRIMARY KEY (id),
+	FOREIGN KEY (occurence_id) REFERENCES PaymentOccurence(id),
+	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+	CONSTRAINT UC_Bill UNIQUE (user_id, company)
 );
 
 CREATE TABLE dashboard.Bank (
@@ -96,7 +95,8 @@ CREATE TABLE dashboard.Bank (
 	zipcode VARCHAR(10) NOT NULL,
 
 	PRIMARY KEY (id),
-	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+	CONSTRAINT UC_Bank UNIQUE (user_id, name)
 );
 
 CREATE TABLE dashboard.BankAccountType (
@@ -132,7 +132,7 @@ CREATE TABLE dashboard.BankSubAccount (
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (bank_account_id) REFERENCES BankAccount(id) ON DELETE CASCADE,
-	UNIQUE (bank_account_id, name)
+	CONSTRAINT UC_Bank_Sub_Account UNIQUE (bank_account_id, name)
 );
 
 CREATE TABLE dashboard.BankAccountDeposit (
