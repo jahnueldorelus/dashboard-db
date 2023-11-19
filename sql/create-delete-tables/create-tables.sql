@@ -89,7 +89,7 @@ CREATE TABLE dashboard.Bank (
 	user_id INT UNSIGNED NOT NULL,
 	name VARCHAR(100) NOT NULL,
 	address_one VARCHAR(200) NOT NULL,
-	address_two VARCHAR(200) NOT NULL,
+	address_two VARCHAR(200),
 	city VARCHAR(85) NOT NULL,
 	state VARCHAR(30) NOT NULL,
 	zipcode VARCHAR(10) NOT NULL,
