@@ -25,7 +25,8 @@ CREATE TABLE dashboard.SurveillanceCamera (
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
-	CONSTRAINT UC_Surveillance_Camera UNIQUE (user_id, name, link)
+	CONSTRAINT UC_Surveillance_Camera_Name UNIQUE (user_id, name),
+	CONSTRAINT UC_Surveillance_Camera_Link UNIQUE (user_id, link)
 );
 
 CREATE TABLE dashboard.EmbyServer (
