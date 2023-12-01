@@ -38,7 +38,8 @@ CREATE TABLE dashboard.EmbyServer (
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
-	CONSTRAINT UC_Emby_Server UNIQUE (user_id, host, host_name)
+	CONSTRAINT UC_Emby_Server_Host UNIQUE (user_id, host),
+	CONSTRAINT UC_Emby_Server_Host_Name UNIQUE (user_id, host_name)
 );
 
 CREATE TABLE dashboard.PaymentOccurence (
