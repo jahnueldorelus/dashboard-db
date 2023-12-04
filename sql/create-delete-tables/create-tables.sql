@@ -14,7 +14,8 @@ CREATE TABLE dashboard.ExternalApp (
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
-	CONSTRAINT UC_External_App UNIQUE (user_id, name, link)
+	CONSTRAINT UC_External_App_Name UNIQUE (user_id, name),
+	CONSTRAINT UC_External_App_Link UNIQUE (user_id, link)
 );
 
 CREATE TABLE dashboard.SurveillanceCamera (
