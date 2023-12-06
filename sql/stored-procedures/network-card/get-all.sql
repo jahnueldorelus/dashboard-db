@@ -24,7 +24,7 @@ BEGIN
 				NetworkCard.vlan_id AS vlanId, NetworkCard.mac_address AS macAddress
 		FROM ServerMachine
 			INNER JOIN VirtualMachine ON ServerMachine.id = VirtualMachine.server_id
-			INNER JOIN NetworkCard ON ServerMachine.id = NetworkCard.server_id AND VirtualMachine.id = NetworkCard.server_vm_id
+			INNER JOIN NetworkCard ON ServerMachine.id = NetworkCard.server_id AND VirtualMachine.id = NetworkCard.vm_id
 		WHERE ServerMachine.user_id = param_userId AND ServerMachine.id = param_serverMachineId AND 
 				VirtualMachine.id = param_virtualMachineId
 		ORDER BY NetworkCard.name;

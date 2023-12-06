@@ -18,7 +18,7 @@ BEGIN
 				NetworkCard.ipv4, NetworkCard.ipv4_subnet as ipv4Subnet,
 				NetworkCard.ipv6, NetworkCard.ipv6_subnet AS ipv6Subnet,
 				NetworkCard.vlan_id AS vlanId, NetworkCard.mac_address AS macAddress
-		WHERE NetworkCard.id = param_networkCardId AND NetworkCard.server_vm_id = param_virtualMachineId;
+		WHERE NetworkCard.id = param_networkCardId AND NetworkCard.vm_id = param_virtualMachineId;
 	END IF;
 END$$
 DELIMITER ;

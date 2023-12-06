@@ -75,7 +75,7 @@ CREATE TABLE dashboard.VirtualMachine (
 
 CREATE TABLE dashboard.NetworkCard (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	server_vm_id INT UNSIGNED,
+	vm_id INT UNSIGNED,
 	server_id INT UNSIGNED NOT NULL,
 	name VARCHAR(255) NOT NULL,
 	ipv4 CHAR(15) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE dashboard.NetworkCard (
 	mac_address CHAR(17) NOT NULL,
 
 	PRIMARY KEY (id),
-	FOREIGN KEY (server_vm_id) REFERENCES VirtualMachine(id) ON DELETE CASCADE,
+	FOREIGN KEY (vm_id) REFERENCES VirtualMachine(id) ON DELETE CASCADE,
 	FOREIGN KEY (server_id) REFERENCES ServerMachine(id) ON DELETE CASCADE,
-	CONSTRAINT UC_Machine_Network_Name UNIQUE (server_vm_id, server_id, name)
+	CONSTRAINT UC_Machine_Network_Name UNIQUE (vm_id, server_id, name)
 );

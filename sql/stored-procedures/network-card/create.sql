@@ -28,7 +28,7 @@ BEGIN
 		END IF;
 	END IF;
 
-	INSERT INTO NetworkCard (server_vm_id, server_id, name, ipv4, ipv4_subnet, ipv6, ipv6_subnet, vlan_id, mac_address) 
+	INSERT INTO NetworkCard (vm_id, server_id, name, ipv4, ipv4_subnet, ipv6, ipv6_subnet, vlan_id, mac_address) 
 		VALUES (param_virtualMachineId, param_serverId, param_name, param_ipv4, param_ipv4Subnet, param_ipv6, param_ipv6Subnet,
 				param_vlanId, param_macAddress);
 
