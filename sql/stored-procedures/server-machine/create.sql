@@ -9,7 +9,7 @@ CREATE PROCEDURE `create_user_server_machine` (IN param_userId INT UNSIGNED, par
 BEGIN
 	INSERT INTO ServerMachine (user_id, name, used_storage_in_gb, total_storage_in_gb, used_memory_in_gb, 
 						total_memory_in_gb, cpu_sockets) 
-		VALUES (param_userId, param_name, param_usedStorageInGB, param_totalStorageInGB.
+		VALUES (param_userId, param_name, param_usedStorageInGB, param_totalStorageInGB,
 				param_usedMemoryInGB, param_totalMemoryInGB, param_cpuSockets);
 
 	CALL get_server_machine(LAST_INSERT_ID());

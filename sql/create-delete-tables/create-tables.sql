@@ -80,9 +80,9 @@ CREATE TABLE dashboard.NetworkCard (
 	name VARCHAR(255) NOT NULL,
 	ipv4 CHAR(15) NOT NULL,
 	ipv4_subnet TINYINT UNSIGNED NOT NULL,
-	ipv6 CHAR(39) NOT NULL,
-	ipv6_subnet TINYINT UNSIGNED NOT NULL,
-	vlan_id SMALLINT UNSIGNED NOT NULL,
+	ipv6 CHAR(39),
+	ipv6_subnet TINYINT UNSIGNED,
+	vlan_id SMALLINT UNSIGNED,
 	mac_address CHAR(17) NOT NULL,
 
 	PRIMARY KEY (id),
