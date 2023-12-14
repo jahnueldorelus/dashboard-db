@@ -30,7 +30,7 @@ BEGIN
 	END IF;
 
 	UPDATE NetworkCard SET vm_id = param_virtualMachineId, server_id = param_serverId, name = param_name,
-								ipv4 = param_ipv4, param_ipv4Subnet = param_memoryInGB, ipv6 = param_ipv6,
+								ipv4 = param_ipv4, ipv4_subnet = param_ipv4Subnet, ipv6 = param_ipv6,
 								ipv6_subnet = param_ipv6Subnet, vlan_id = param_vlanId, mac_address = param_macAddress
 						WHERE id = param_networkCardId;
 
