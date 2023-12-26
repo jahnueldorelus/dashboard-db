@@ -90,3 +90,25 @@ CREATE TABLE dashboard.NetworkCard (
 	FOREIGN KEY (server_id) REFERENCES ServerMachine(id) ON DELETE CASCADE,
 	CONSTRAINT UC_Machine_Network_Name UNIQUE (vm_id, server_id, name)
 );
+
+CREATE TABLE dashboard.Pdu (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	user_id INT UNSIGNED NOT NULL,
+	name VARCHAR(255) NOT NULL,
+	location VARCHAR(255) NOT NULL,
+
+	PRIMARY KEY (id),
+	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+	CONSTRAINT UC_Pdu_Name UNIQUE (user_id, name)
+);
+
+CREATE TABLE dashboard.PduPort (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	pdu_id INT UNSIGNED NOT NULL,
+	port_number TINYINT UNSIGNED NOT NULL,
+	name VARCHAR(255) NOT NULL,
+
+	PRIMARY KEY (id),
+	FOREIGN KEY (pdu_id) REFERENCES Pdu(id) ON DELETE CASCADE,
+	CONSTRAINT UC_Pdu_Port_Name UNIQUE (pdu_id, name)
+);

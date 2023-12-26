@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS dashboard.Pdu;
+DROP TABLE IF EXISTS dashboard.PduPort;
 DROP TABLE IF EXISTS dashboard.NetworkCard;
 DROP TABLE IF EXISTS dashboard.VirtualMachine;
 DROP TABLE IF EXISTS dashboard.ServerMachine;
