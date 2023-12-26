@@ -3,9 +3,9 @@ USE `dashboard`$$
 DROP PROCEDURE IF EXISTS `update_user_server_machine`$$
 
 CREATE PROCEDURE `update_user_server_machine` (IN param_userId INT UNSIGNED, param_serverMachineId INT UNSIGNED,
-										param_name VARCHAR(255), param_usedStorageInGB INT UNSIGNED, 
-										param_totalStorageInGB INT UNSIGNED, param_usedMemoryInGB INT UNSIGNED, 
-										param_totalMemoryInGB INT UNSIGNED, param_cpuSockets TINYINT UNSIGNED)
+										param_name VARCHAR(255), param_usedStorageInGB DECIMAL(16,6), 
+										param_totalStorageInGB DECIMAL(16,6), param_usedMemoryInGB DECIMAL(16,6), 
+										param_totalMemoryInGB DECIMAL(16,6), param_cpuSockets TINYINT UNSIGNED)
 BEGIN
 	SET @errorMessage = "Cannot update a server machine the user doesn't have";
 	SET @serverUserId = (SELECT user_id FROM ServerMachine WHERE id = param_serverMachineId);

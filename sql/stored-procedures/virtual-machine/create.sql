@@ -4,8 +4,8 @@ DROP PROCEDURE IF EXISTS `create_user_virtual_machine`$$
 
 CREATE PROCEDURE `create_user_virtual_machine` (IN param_userId INT UNSIGNED, param_serverId INT UNSIGNED, 
 											param_name VARCHAR(255), param_cpuCores SMALLINT UNSIGNED,
-											param_cpuSockets TINYINT UNSIGNED, param_storageInGB INT UNSIGNED,
-											param_memoryInGB INT UNSIGNED, param_type ENUM('UEFI', 'Legacy'))
+											param_cpuSockets TINYINT UNSIGNED, param_storageInGB DECIMAL(16,6),
+											param_memoryInGB DECIMAL(16,6), param_type ENUM('UEFI', 'Legacy'))
 BEGIN
 	SET @serverUserId = (SELECT user_id FROM ServerMachine WHERE id = param_serverId);
 
