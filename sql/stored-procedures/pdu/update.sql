@@ -3,7 +3,8 @@ USE `dashboard`$$
 DROP PROCEDURE IF EXISTS `update_user_pdu`$$
 
 CREATE PROCEDURE `update_user_pdu` (IN param_userId INT UNSIGNED, param_pduId INT UNSIGNED,
-										param_name VARCHAR(255), param_location VARCHAR(255))
+										param_name VARCHAR(255), param_numOfPorts TINYINT UNSIGNED,
+										param_location VARCHAR(255))
 BEGIN
 	SET @errorMessage = "Cannot update a power distribution unit the user doesn't have";
 	SET @pduUserId = (SELECT user_id FROM Pdu WHERE id = param_pduId);
@@ -19,7 +20,7 @@ BEGIN
 	END IF;
 
 
-	UPDATE Pdu SET name = param_name, location = param_location
+	UPDATE Pdu SET name = param_name, num_of_ports = param_numOfPorts, location = param_location
 				WHERE user_id = param_userId AND id = param_pduId;
 	
 	CALL get_pdu(param_pduId);
