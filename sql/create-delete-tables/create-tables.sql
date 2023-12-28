@@ -97,6 +97,12 @@ CREATE TABLE dashboard.Pdu (
 	name VARCHAR(255) NOT NULL,
 	num_of_ports TINYINT UNSIGNED NOT NULL,
 	location VARCHAR(255) NOT NULL,
+	type ENUM("Rackmount", "Floor-Mounted", "Cabinet", "Portable") NOT NULL,
+	min_freq_in_mhz DECIMAL(13,6),
+	max_freq_in_mhz DECIMAL(13,6) NOT NULL,
+	min_volts SMALLINT UNSIGNED,
+	max_volts SMALLINT UNSIGNED NOT NULL,
+	amps TINYINT UNSIGNED NOT NULL,
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
