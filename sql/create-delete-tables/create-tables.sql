@@ -36,6 +36,7 @@ CREATE TABLE dashboard.EmbyServer (
 	host VARCHAR(255) NOT NULL,
 	host_name VARCHAR(255) NOT NULL,
 	api_key VARCHAR(255) NOT NULL,
+	secure BOOLEAN NOT NULL,
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
