@@ -11,6 +11,7 @@ CREATE TABLE dashboard.ExternalApp (
 	user_id INT UNSIGNED NOT NULL,
 	name VARCHAR(255) NOT NULL,
 	link VARCHAR(255) NOT NULL,
+	img_ext ENUM('jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp', 'png', 'svg', 'webp'),
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
