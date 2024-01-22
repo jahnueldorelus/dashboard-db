@@ -121,3 +121,51 @@ CREATE TABLE dashboard.PduPort (
 	FOREIGN KEY (pdu_id) REFERENCES Pdu(id) ON DELETE CASCADE,
 	CONSTRAINT UC_Pdu_Port_Name UNIQUE (pdu_id, name)
 );
+
+CREATE TABLE dashboard.NetworkSwitch (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	user_id INT UNSIGNED NOT NULL,
+	name VARCHAR(255) NOT NULL,
+	num_of_ports TINYINT UNSIGNED NOT NULL,
+	location VARCHAR(255) NOT NULL,
+
+	PRIMARY KEY (id),
+	FOREIGN KEY (user_id) REFERENCES User (id) ON DELETE CASCADE,
+	CONSTRAINT UC_Network_Switch_Name UNIQUE (user_id, name)
+);
+
+CREATE TABLE dashboard.NetworkSwitchVlan (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	switch_id INT UNSIGNED NOT NULL,
+	name VARCHAR(255) NOT NULL,
+	vid SMALLINT UNSIGNED NOT NULL,
+
+	PRIMARY KEY (id),
+	FOREIGN KEY (switch_id) REFERENCES NetworkSwitch (id) ON DELETE CASCADE,
+	CONSTRAINT UC_Switch_Vlan UNIQUE (switch_id, vid)
+);
+
+CREATE TABLE dashboard.NetworkSwitchPort (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	switch_id INT UNSIGNED NOT NULL,
+	port_number TINYINT UNSIGNED NOT NULL,
+	name VARCHAR(255) NOT NULL,
+	pvid SMALLINT UNSIGNED NOT NULL,
+	mode ENUM("access", "trunk", "general") NOT NULL,
+
+	PRIMARY KEY (id),
+	FOREIGN KEY (switch_id) REFERENCES NetworkSwitch (id) ON DELETE CASCADE,
+	CONSTRAINT UC_Network_Switch_Port UNIQUE (switch_id, port_number)
+);
+
+CREATE TABLE dashboard.NetworkSwitchPortVlan (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	switch_vlan_id INT UNSIGNED NOT NULL,
+	switch_port_id INT UNSIGNED NOT NULL,
+	mode ENUM("forbidden", "excluded", "untagged", "tagged", "none") NOT NULL,
+
+	PRIMARY KEY (id),
+	FOREIGN KEY (switch_vlan_id) REFERENCES NetworkSwitchVlan (id) ON DELETE CASCADE,
+	FOREIGN KEY (switch_port_id) REFERENCES NetworkSwitchPort (id) ON DELETE CASCADE,
+	CONSTRAINT UC_Network_Switch_Vlan_Port UNIQUE (switch_vlan_id, switch_port_id)
+);

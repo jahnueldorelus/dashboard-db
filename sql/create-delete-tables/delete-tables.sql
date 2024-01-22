@@ -1,3 +1,8 @@
+
+DROP TABLE IF EXISTS dashboard.NetworkSwitchPortVlan;
+DROP TABLE IF EXISTS dashboard.NetworkSwitchPort;
+DROP TABLE IF EXISTS dashboard.NetworkSwitchVlan;
+DROP TABLE IF EXISTS dashboard.NetworkSwitch;
 DROP TABLE IF EXISTS dashboard.PduPort;
 DROP TABLE IF EXISTS dashboard.Pdu;
 DROP TABLE IF EXISTS dashboard.NetworkCard;
