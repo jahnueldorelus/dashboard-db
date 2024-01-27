@@ -128,6 +128,9 @@ CREATE TABLE dashboard.NetworkSwitch (
 	name VARCHAR(255) NOT NULL,
 	num_of_ports TINYINT UNSIGNED NOT NULL,
 	location VARCHAR(255) NOT NULL,
+	managed BOOLEAN NOT NULL,
+	vlan_capable BOOLEAN NOT NULL,
+	poe_capable BOOLEAN NOT NULL,
 
 	PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES User (id) ON DELETE CASCADE,

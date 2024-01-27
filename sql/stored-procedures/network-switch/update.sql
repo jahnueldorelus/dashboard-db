@@ -4,7 +4,8 @@ DROP PROCEDURE IF EXISTS `update_user_network_switch`$$
 
 CREATE PROCEDURE `update_user_network_switch` (IN param_userId INT UNSIGNED, param_switchId INT UNSIGNED,
 												param_name VARCHAR(255), param_numOfPorts TINYINT UNSIGNED,
-												param_location VARCHAR(255))
+												param_location VARCHAR(255), param_managed BOOLEAN, 
+												param_vlanCapable BOOLEAN, param_poeCapable BOOLEAN)
 BEGIN
 	SET @errorMessage = "Cannot update a network switch the user doesn't have";
 	SET @switchUserId = (SELECT user_id FROM NetworkSwitch WHERE id = param_switchId);
@@ -20,7 +21,8 @@ BEGIN
 	END IF;
 
 
-	UPDATE NetworkSwitch SET name = param_name, num_of_ports = param_numOfPorts, location = param_location
+	UPDATE NetworkSwitch SET name = param_name, num_of_ports = param_numOfPorts, location = param_location,
+		managed = param_managed, vlan_capable = param_vlanCapable, poe_capable = param_poeCapable
 				WHERE user_id = param_userId AND id = param_switchId;
 	
 	CALL get_network_switch(param_switchId);
