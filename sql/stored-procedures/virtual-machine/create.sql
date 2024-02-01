@@ -7,11 +7,16 @@ CREATE PROCEDURE `create_user_virtual_machine` (IN param_userId INT UNSIGNED, pa
 											param_cpuSockets TINYINT UNSIGNED, param_storageInGB DECIMAL(16,6),
 											param_memoryInGB DECIMAL(16,6), param_type ENUM('UEFI', 'Legacy'))
 BEGIN
-	SET @serverUserId = (SELECT user_id FROM ServerMachine WHERE id = param_serverId);
+	SET @server_user_id = (SELECT user_id FROM ServerMachine WHERE id = param_serverId);
+
+	-- If the server machine doesn't exist
+	IF (ISNULL(@server_user_id)) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot create a virtual machine on a server that doesn't exist";
+	END IF;
 
 	-- If the server machine doesn't belong to the user
-	IF @serverUserId != param_userId THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot create a virtual machine in a server the user doesn't have";
+	IF (@server_user_id != param_userId) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot create a virtual machine on a server you don't own";
 	END IF;
 
 	INSERT INTO VirtualMachine (server_id, name, cpu_cores, cpu_sockets, storage_in_gb, memory_in_gb, type) 

@@ -6,18 +6,16 @@ CREATE PROCEDURE `create_user_network_switch_port` (IN param_userId INT UNSIGNED
 													param_portNumber TINYINT UNSIGNED, param_name VARCHAR(255), 
 													param_pvid SMALLINT UNSIGNED, param_mode ENUM("access", "trunk", "general"))
 BEGIN
-	SET @errorMessage = "Cannot create a port in a network switch the user doesn't have";
-	SET @switchUserId = (SELECT user_id FROM NetworkSwitch  
-							WHERE NetworkSwitch.id = param_switchId);
+	SET @switchUserId = (SELECT user_id FROM NetworkSwitch WHERE NetworkSwitch.id = param_switchId);
 
 	-- If the network switch doesn't exist
-	IF ISNULL(@switchUserId) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
+	IF (ISNULL(@switchUserId)) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot create a port on a network switch that doesn't exist";
 	END IF;
 
 	-- If the network switch doesn't belong to the user
-	IF @switchUserId != param_userId THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
+	IF (@switchUserId != param_userId) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot create a port on a network switch you don't own";
 	END IF;
 
 	INSERT INTO NetworkSwitchPort (switch_id, port_number, name, pvid, mode) 

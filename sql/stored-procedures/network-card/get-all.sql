@@ -6,7 +6,7 @@ CREATE PROCEDURE `get_user_network_cards` (IN param_userId INT UNSIGNED, param_v
 												param_serverMachineId INT UNSIGNED)
 BEGIN
 	-- Retrieves network cards of a server
-	IF ISNULL(param_virtualMachineId) THEN
+	IF (ISNULL(param_virtualMachineId)) THEN
 		SELECT NetworkCard.id, NetworkCard.server_id AS serverId, NetworkCard.name, 
 				NetworkCard.ipv4, NetworkCard.ipv4_subnet as ipv4Subnet,
 				NetworkCard.ipv6, NetworkCard.ipv6_subnet AS ipv6Subnet,

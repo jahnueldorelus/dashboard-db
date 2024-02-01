@@ -7,17 +7,16 @@ CREATE PROCEDURE `update_user_network_switch` (IN param_userId INT UNSIGNED, par
 												param_location VARCHAR(255), param_managed BOOLEAN, 
 												param_vlanCapable BOOLEAN, param_poeCapable BOOLEAN)
 BEGIN
-	SET @errorMessage = "Cannot update a network switch the user doesn't have";
-	SET @switchUserId = (SELECT user_id FROM NetworkSwitch WHERE id = param_switchId);
+	SET @switch_user_id = (SELECT user_id FROM NetworkSwitch WHERE id = param_switchId);
 
 	-- If the network switch doesn't exist
-	IF ISNULL(@switchUserId) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
+	IF (ISNULL(@switch_user_id)) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot update a network switch that doesn't exist";
 	END IF;
 
 	-- If the network switch doesn't belong to the user
-	IF @switchUserId != param_userId THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
+	IF (@switch_user_id != param_userId) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot update a network switch you don't own";
 	END IF;
 
 

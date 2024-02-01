@@ -4,20 +4,17 @@ DROP PROCEDURE IF EXISTS `delete_user_network_switch_vlan`$$
 
 CREATE PROCEDURE `delete_user_network_switch_vlan` (IN param_userId INT UNSIGNED, param_switchVlanId INT UNSIGNED)
 BEGIN
-	SET @errorMessage = "Cannot delete a vlan in a network switch the user doesn't have";
-	SET @switchVlanUserId = (SELECT user_id FROM NetworkSwitchVlan 
-								LEFT JOIN NetworkSwitch  
-									ON NetworkSwitchVlan.switch_id = NetworkSwitch.id
-								WHERE NetworkSwitchVlan.id = param_switchVlanId);
+	SET @switch_id = (SELECT switch_id FROM NetworkSwitchVlan WHERE id = param_switchVlanId);
 
 	-- If the network switch vlan doesn't exist
-	IF ISNULL(@switchVlanUserId) THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
+	IF (ISNULL(@switch_id)) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot delete a VLAN that doesn't exist";
 	END IF;
 
 	-- If the network switch vlan doesn't belong to the user
-	IF @switchVlanUserId != param_userId THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @errorMessage;
+	SET @switch_user_id = (SELECT user_id FROM NetworkSwitch WHERE id = @switch_id);
+	IF (@switch_user_id != param_userId) THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot delete a VLAN you don't own";
 	END IF;
 
 	DELETE FROM NetworkSwitchVlan WHERE id = param_switchVlanId;
