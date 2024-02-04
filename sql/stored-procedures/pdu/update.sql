@@ -22,11 +22,17 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot update a power distribution unit you don't own";
 	END IF;
 
-
-	UPDATE Pdu SET name = param_name, num_of_ports = param_numOfPorts, location = param_location,
-					type = param_type, min_freq_in_mhz = param_minFreqInMhz, max_freq_in_mhz = param_maxFreqInMhz,
-					min_volts = param_minVolts, max_volts = param_maxVolts, amps = param_amps
-				WHERE user_id = param_userId AND id = param_pduId;
+	UPDATE Pdu SET 
+			name = param_name, 
+			num_of_ports = param_numOfPorts, 
+			location = param_location,
+			type = param_type, 
+			min_freq_in_mhz = param_minFreqInMhz, 
+			max_freq_in_mhz = param_maxFreqInMhz,
+			min_volts = param_minVolts, 
+			max_volts = param_maxVolts, 
+			amps = param_amps
+		WHERE id = param_pduId;
 	
 	CALL get_pdu(param_pduId);
 END$$

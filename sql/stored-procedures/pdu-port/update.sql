@@ -5,10 +5,10 @@ DROP PROCEDURE IF EXISTS `update_user_pdu_port`$$
 CREATE PROCEDURE `update_user_pdu_port` (IN param_userId INT UNSIGNED, param_pduPortId INT UNSIGNED, 
 											param_portNumber TINYINT UNSIGNED, param_name VARCHAR(255))
 BEGIN
-	SET @pdu_id = (SELECT pdu_id FROM PduPort WHERE id = param_pduPortId);
+	SET @pdu_id = (SELECT id FROM PduPort WHERE id = param_pduPortId);
 
 	-- If the power distribution unit port doesn't exist
-	IF (@pdu_id) THEN
+	IF (ISNULL(@pdu_id)) THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Cannot update a power distribution unit port that doesn't exist";
 	END IF;
 

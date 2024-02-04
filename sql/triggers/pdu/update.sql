@@ -5,7 +5,7 @@ DROP trigger IF EXISTS `update_pdu`$$
 CREATE trigger `update_pdu` BEFORE UPDATE ON Pdu
 	FOR EACH ROW	
 		BEGIN
-			SET @highest_port_number_in_use = (SELECT MAX(port_number) FROM PduPort WHERE switch_id = NEW.id);
+			SET @highest_port_number_in_use = (SELECT MAX(port_number) FROM PduPort WHERE pdu_id = NEW.id);
 
 			-- Makes sure the new number of ports isn't less than the highest port number that exists
 			IF (NEW.num_of_ports < @highest_port_number_in_use) THEN
